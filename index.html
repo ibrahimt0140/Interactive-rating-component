@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Interactive rating component</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Overpass:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: "Overpass", sans-serif;
+      background-color: hsl(216, 12%, 8%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+    .submit {
+      background-color: hsl(213, 19%, 18%);
+      width: 310px;
+      height: 300px;
+      border-radius: 20px;
+    }
+    .icon {
+      margin-top: 25px;
+      margin-left: 25px;
+      background-color: hsl(200, 22%, 19%);
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      margin-bottom: 20px;
+    }
+    .star {
+      width: 10px;
+      height: 10px;
+      margin-top: 9px;
+      margin-left: 9px;
+    }
+    .h2-submit {
+      margin-left: 25px;
+      color: hsl(0, 0%, 100%);
+      font-weight: 400;
+      margin-bottom: 10px;
+      font-size: 21px;
+    }
+    .p-submit {
+      margin-left: 25px;
+      font-size: 11px;
+      color: hsl(217, 12%, 63%);
+      font-weight: 400;
+      margin-bottom: 15px;
+    }
+    .number-buttons {
+      margin-left: 25px;
+      display: flex;
+      gap: 18px;
+      margin-bottom: 22px;
+    }
+    .numbers {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: none;
+      background-color: hsl(200, 22%, 19%);
+      color: hsl(217, 12%, 63%);
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: "Overpass", sans-serif;
+    }
+    .numbers:focus {
+      background-color: hsl(0, 0%, 100%);
+      color: hsl(216, 12%, 8%);
+    }
+    .numbers:hover {
+      background-color: hsl(25, 97%, 53%);
+      color: hsl(216, 12%, 8%);
+    }
+    .submit-button {
+      margin-left: 25px;
+      width: 252px;
+      height: 34px;
+      border-radius: 20px;
+      border: none;
+      background-color: hsl(25, 97%, 53%);
+      color: hsl(216, 12%, 8%);
+      font-weight: 700;
+      font-size: 12px;
+      font-family: "Overpass", sans-serif;
+      cursor: pointer;
+    }
+    .submit-button:hover {
+      background-color: hsl(0, 0%, 100%);
+    }
+    .thank-you {
+      background-color: hsl(213, 19%, 18%);
+      width: 310px;
+      height: 300px;
+      border-radius: 20px;
+      text-align: center;
+      display: none;
+    }
+    .illustration-thank-you {
+      margin-top: 34px;
+      margin-bottom: 20px;
+      height: 86px;
+    }
+    .selection {
+      margin-left: 25%;
+      width: 50%;
+      height: 22px;
+      background-color: hsl(200, 22%, 19%);
+      border-radius: 10px;
+      margin-bottom: 26px;
+    }
+    .p-selection {
+      font-size: 12px;
+      color: hsl(25, 97%, 53%, 0.6);
+      text-align: center;
+      padding-top: 4px;
+    }
+    .h2-thank-you {
+      color: hsl(0, 0%, 100%);
+      font-weight: 500;
+      margin-bottom: 8px;
+      font-size: 21px;
+    }
+    .p-thank-you {
+      font-size: 11px;
+      color: hsl(217, 12%, 63%);
+      font-weight: 400;
+    }
+  </style>
+  <body>
+    <div class="submit" id="submitPage">
+      <div class="icon">
+        <img class="star" src="icon-star.svg" alt="icon-star" />
+      </div>
+      <h2 class="h2-submit">How did we do?</h2>
+      <p class="p-submit">
+        Please let us know how we did with your support <br />
+        request. All feedback is appreciated to help us <br />
+        improve our offering!
+      </p>
+      <div class="number-buttons">
+        <button class="numbers" data-value="1">1</button>
+        <button class="numbers" data-value="2">2</button>
+        <button class="numbers" data-value="3">3</button>
+        <button class="numbers" data-value="4">4</button>
+        <button class="numbers" data-value="5">5</button>
+      </div>
+      <button class="submit-button" id="submitButton">SUBMIT</button>
+    </div>
+    <div class="thank-you" id="thankYou">
+      <img
+        class="illustration-thank-you"
+        src="illustration-thank-you.svg"
+        alt="illustration-thank-you"
+      />
+      <div class="selection">
+        <p class="p-selection">
+          You selected <span id="selected"></span> out of 5
+        </p>
+      </div>
+      <h2 class="h2-thank-you">Thank you!</h2>
+      <p class="p-thank-you">
+        We appreciate you taking the time to give a rating. <br />
+        If you ever need more support, don't hesitate to <br />
+        get in touch!
+      </p>
+    </div>
+    <script>
+      let selected = null;
+      document
+        .querySelectorAll(".numbers")
+        .forEach((btn) =>
+          btn.addEventListener("click", () => (selected = btn.dataset.value))
+        );
+      document
+        .getElementById("submitButton")
+        .addEventListener("click", function () {
+          if (selected) {
+            document.getElementById("submitPage").style.display = "none";
+            document.getElementById("thankYou").style.display = "block";
+            document.getElementById("selected").innerHTML = selected;
+          }
+        });
+    </script>
+  </body>
+</html>
